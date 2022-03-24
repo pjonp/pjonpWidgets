@@ -1,0 +1,11 @@
+{
+  "name": "pjonpwidgets",
+  "version": "1.0.0",
+  "description": "pjonp's widgets",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "pjonp",
+  "license": "AGPL-3.0-or-later"
+}

@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family={{fontFamily}}&display=swap');
+:root {
+  --barColor: {{default_barColor}};
+}
+/* from Annedorko's Level-up Goal */
+#overlay {
+  display: flex;
+  justify-content: {{labelXposition}};
+}
+#progress {
+  float: right;
+  font-family: {{fontFamily}}, sans-serif;
+  font-size: {{fontSize}}px;
+  line-height: {{fontSize}}px;
+  color: {{barFontColor}};
+  display: flex;
+  flex-direction: {{labelYposition}};
+  flex-wrap: nowrap;
+  width: 95%;
+  align-items: {{labelXposition}};
+  justify-content: flex-end;
+}
+
+#label {
+  align-self: {{labelXposition}};
+  height: 20px;
+  padding: .7em 1em;
+  border-radius: 1.5em;
+  background: {{labelBgColor}};
+  display: {{showLabel}};
+  align-items: center;
+  color: {{labelFontColor}};
+}
+
+#bar {
+  width: 94%;
+  min-height: 20px;
+  padding: .7em 1em;
+  border-radius: 1.5em;
+  background: {{barBgColor}};
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+#bar::before, #loading {
+  content: '';
+  background: {{barBgColor}};
+  border-radius: 1.5em;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -2;
+}
+
+#loading {
+  background: var(--barColor);
+  min-width: 13%;
+  width: 13%;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  transition: .5s all ease-in-out;
+}
+
+.amount {
+  position: relative;
+  padding-right: 1em;
+}
+
+#endgame {
+  color: {{barGoalFontColor}}
+}
+#endgame .amount {
+  padding-right: 0px;
+}

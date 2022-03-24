@@ -1,0 +1,436 @@
+{
+  "main_label": {
+    "type": "text",
+    "label": "Main Label",
+    "value": "Unlock Next",
+    "group": "Main"
+  },
+  "goalType": {
+    "type": "dropdown",
+    "label": "Goal Type",
+    "value": "combined",
+    "options": {
+      "tip": "Tips",
+      "subscriber": "Subs",
+      "cheer": "Bits/Elixer/Superchat/Stars",
+      "follower": "Followers",
+      "chats": "Chat Messages",
+      "combined": "Combined"
+    },
+    "group": "Main"
+  },
+  "subMultiplier": {
+    "type": "number",
+    "label": "Sub Multiplier for (Combined)",
+    "value": 2.5,
+    "min": 0,
+    "group": "Main"
+  },
+  "cheerMultiplier": {
+    "type": "number",
+    "label": "Bits/Elixer/Superchat/Stars for (Combined)",
+    "value": 0.01,
+    "min": 0,
+    "group": "Main"
+  },
+  "followerMultiplier": {
+    "type": "number",
+    "label": "Follower Multiplier for (Combined)",
+    "value": 0.5,
+    "min": 0,
+    "group": "Main"
+  },
+  "chatsMultiplier": {
+    "type": "number",
+    "label": "Chat Multiplier for (Combined) [SESSION ONLY]",
+    "value": 0.05,
+    "min": 0,
+    "group": "Main"
+  },
+  "prefix": {
+    "type": "text",
+    "label": "Number Prefix",
+    "value": "",
+    "group": "Main"
+  },
+  "decimals": {
+    "type": "dropdown",
+    "label": "Number Decimals",
+    "value": "2",
+    "options": {
+      "0": "$10",
+      "2": "$10.00"
+    },
+    "group": "Main"
+  },
+  "num_goals": {
+    "type": "slider",
+    "label": "Number of Goals (Max 10)",
+    "value": 5,
+    "min": 1,
+    "max": 10,
+    "step": 1,
+    "group": "Main"
+  },
+  "fontFamily": {
+    "type": "googleFont",
+    "label": "Font Style",
+    "value": "Karla",
+    "group": "Visuals"
+  },
+  "fontSize": {
+    "type": "slider",
+    "label": "Scale/Font Size",
+    "value": 24,
+    "min": 0,
+    "max": 50,
+    "group": "Visuals"
+  },
+  "default_barColor": {
+    "type": "colorpicker",
+    "label": "Default Bar Color",
+    "value": "rgba(13, 166, 255, 0.9)",
+    "group": "Visuals"
+  },
+  "barFontColor": {
+    "type": "colorpicker",
+    "label": "Bar Font Color",
+    "value": "white",
+    "group": "Visuals"
+  },
+  "barBgColor": {
+    "type": "colorpicker",
+    "label": "Bar Background Color",
+    "value": "rgba(23, 23, 23, 0.4)",
+    "group": "Visuals"
+  },
+  "barGoalFontColor": {
+    "type": "colorpicker",
+    "label": "Goal Font Color",
+    "value": "white",
+    "group": "Visuals"
+  },
+  "showLabel": {
+    "type": "dropdown",
+    "label": "Show Label",
+    "value": "flex",
+    "options": {
+      "flex": "Yes",
+      "none": "No"
+    },
+    "group": "Visuals"
+  },
+  "labelYposition": {
+    "type": "dropdown",
+    "label": "Label Y Position",
+    "value": "column",
+    "options": {
+      "column-reverse": "Above",
+      "column": "Below"
+    },
+    "group": "Visuals"
+  },
+  "labelXposition": {
+    "type": "dropdown",
+    "label": "Label X Position",
+    "value": "flex-end",
+    "options": {
+      "flex-start": "Left",
+      "center": "Center",
+      "flex-end": "Right"
+    },
+    "group": "Visuals"
+  },
+  "labelFontColor": {
+    "type": "colorpicker",
+    "label": "Label Font Color",
+    "value": "white",
+    "group": "Visuals"
+  },
+  "labelBgColor": {
+    "type": "colorpicker",
+    "label": "Label Background Color",
+    "value": "rgba(23, 23, 23, 0.6)",
+    "group": "Visuals"
+  },
+  "level_1": {
+    "type": "text",
+    "label": "Level 1 Goal",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_1_amount": {
+    "type": "number",
+    "label": "Goal 1 Amount",
+    "value": 20,
+    "min": 0,
+    "group": "Levels"
+  },
+  "level_1_barColor": {
+    "type": "colorpicker",
+    "label": "Level 1 Bar Color",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_1_audio": {
+   "type": "sound-input",
+   "label": "Level 1 End Audio",
+   "value": "",
+   "group": "Levels"
+ },
+  "level_2": {
+    "type": "text",
+    "label": "Level 2 Goal",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_2_amount": {
+    "type": "number",
+    "label": "Goal 2 Amount",
+    "value": 20,
+    "min": 0,
+    "group": "Levels"
+  },
+  "level_2_barColor": {
+    "type": "colorpicker",
+    "label": "Level 2 Bar Color",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_2_audio": {
+   "type": "sound-input",
+   "label": "Level 2 End Audio",
+   "value": "",
+   "group": "Levels"
+ },
+  "level_3": {
+    "type": "text",
+    "label": "Level 3 Goal",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_3_amount": {
+    "type": "number",
+    "label": "Goal 3 Amount",
+    "value": 20,
+    "min": 0,
+    "group": "Levels"
+  },
+  "level_3_barColor": {
+    "type": "colorpicker",
+    "label": "Level 3 Bar Color",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_3_audio": {
+   "type": "sound-input",
+   "label": "Level 3 End Audio",
+   "value": "",
+   "group": "Levels"
+ },
+  "level_4": {
+    "type": "text",
+    "label": "Level 4 Goal",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_4_amount": {
+    "type": "number",
+    "label": "Goal 4 Amount",
+    "value": 20,
+    "min": 0,
+    "group": "Levels"
+  },
+  "level_4_barColor": {
+    "type": "colorpicker",
+    "label": "Level 4 Bar Color",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_4_audio": {
+   "type": "sound-input",
+   "label": "Level 4 End Audio",
+   "value": "",
+   "group": "Levels"
+ },
+  "level_5": {
+    "type": "text",
+    "label": "Level 5 Goal",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_5_amount": {
+    "type": "number",
+    "label": "Goal 5 Amount",
+    "value": 20,
+    "min": 0,
+    "group": "Levels"
+  },
+  "level_5_barColor": {
+    "type": "colorpicker",
+    "label": "Level 5 Bar Color",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_5_audio": {
+   "type": "sound-input",
+   "label": "Level 5 End Audio",
+   "value": "",
+   "group": "Levels"
+ },
+  "level_6": {
+    "type": "text",
+    "label": "Level 6 Goal",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_6_amount": {
+    "type": "number",
+    "label": "Goal 6 Amount",
+    "value": 25,
+    "min": 0,
+    "group": "Levels"
+  },
+  "level_6_barColor": {
+    "type": "colorpicker",
+    "label": "Level 6 Bar Color",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_6_audio": {
+   "type": "sound-input",
+   "label": "Level 6 End Audio",
+   "value": "",
+   "group": "Levels"
+ },
+  "level_7": {
+    "type": "text",
+    "label": "Level 7 Goal",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_7_amount": {
+    "type": "number",
+    "label": "Goal 7 Amount",
+    "value": 25,
+    "min": 0,
+    "group": "Levels"
+  },
+  "level_7_barColor": {
+    "type": "colorpicker",
+    "label": "Level 7 Bar Color",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_7_audio": {
+   "type": "sound-input",
+   "label": "Level 7 End Audio",
+   "value": "",
+   "group": "Levels"
+ },
+  "level_8": {
+    "type": "text",
+    "label": "Level 8 Goal",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_8_amount": {
+    "type": "number",
+    "label": "Goal 8 Amount",
+    "value": 25,
+    "min": 0,
+    "group": "Levels"
+  },
+  "level_8_barColor": {
+    "type": "colorpicker",
+    "label": "Level 8 Bar Color",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_8_audio": {
+   "type": "sound-input",
+   "label": "Level 8 End Audio",
+   "value": "",
+   "group": "Levels"
+ },
+  "level_9": {
+    "type": "text",
+    "label": "Level 9 Goal",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_9_amount": {
+    "type": "number",
+    "label": "Goal 9 Amount",
+    "value": 25,
+    "min": 0,
+    "group": "Levels"
+  },
+  "level_9_barColor": {
+    "type": "colorpicker",
+    "label": "Level 9 Bar Color",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_9_audio": {
+   "type": "sound-input",
+   "label": "Level 9 End Audio",
+   "value": "",
+   "group": "Levels"
+ },
+  "level_10": {
+    "type": "text",
+    "label": "Level 10 Goal",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_10_amount": {
+    "type": "number",
+    "label": "Goal 10 Amount",
+    "value": 50,
+    "min": 0,
+    "group": "Levels"
+  },
+  "level_10_barColor": {
+    "type": "colorpicker",
+    "label": "Level 10 Bar Color",
+    "value": "",
+    "group": "Levels"
+  },
+  "level_10_audio": {
+   "type": "sound-input",
+   "label": "Level 10 End Audio",
+   "value": "",
+   "group": "Levels"
+ },
+  "widgetName": {
+    "type": "hidden",
+    "value": "Level Up Goal 20.22",
+    "label": "Level Up Goal 20.22",
+    "group": "About"
+  },
+  "widget_note1": {
+    "type": "hidden",
+    "value": "pjonp",
+    "label": "from Annedorko's original L.U.G Widget",
+    "group": "About"
+  },
+  "widgetAuthor": {
+    "type": "hidden",
+    "value": "pjonp",
+    "label": "By: pjonp",
+    "group": "About"
+  },
+  "widgetVersion": {
+    "type": "hidden",
+    "value": "1.0",
+    "label": "Version: 1.0.0 [release]",
+    "group": "About"
+  },
+  "widgetUpdateUrl": {
+    "type": "hidden",
+    "value": "",
+    "label": "Discord: https://discord.com/invite/se",
+    "group": "About"
+  }
+}
