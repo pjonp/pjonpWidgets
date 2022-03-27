@@ -44,8 +44,9 @@ events.forEach(i => {
 
 //FieldDataMaster[KEY][LABEL, GROUP, TYPE, [ VALUE, MIN, MAX, STEP, FUNCTION ] ]
 FieldDataMaster[`widget_note1`] = ['assets "stolen" 😂 from:', 'About', 'hidden'];
-FieldDataMaster[`widget_note2`] = ['https://fatsackfails.com', 'About', 'hidden'];
-FieldDataMaster[`widget_note3`] = ['👀 code by: pjonp#9094', 'About', 'hidden'];
+FieldDataMaster[`widget_note2`] = ['https://fatsackfails.com/makeitrain', 'About', 'hidden'];
+FieldDataMaster[`widget_note3`] = ['Licensed CC BY 4.0', 'About', 'hidden'];
+FieldDataMaster[`widget_note4`] = ['by: pjonp#9094 👀', 'About', 'hidden'];
 FieldDataMaster[`widgetName`] = ['', 'About', 'hidden', "Fatsack's Make It Rain"];
 FieldDataMaster[`widgetAuthor`] = ['', 'About', 'hidden', 'pjonp'];
 FieldDataMaster[`widgetVersion`] = ['', 'About', 'hidden', '1.0.0'];
