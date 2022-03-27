@@ -6,17 +6,9 @@ const fs = require('fs'),
 let FieldDataMaster = {},
   outputObject = {};
 
-`
-Bits.webm
-Coin and Dollar.webm
-Coin.webm
-Confetti.webm
-Dollar.webm
-Gift.webm
-`
-const gHubRepoLink = `https://raw.githubusercontent.com/pjonp/pjonpWidgets/main/fatSacksMakeItRain/assets/`
+const gHubRepoLink = `https://raw.githubusercontent.com/pjonp/pjonpWidgets/main/fatSacksMakeItRain/assets/`;
 
-const events = [ {event: 'follow', name: 'Tip', link: `${gHubRepoLink}Confetti.webm`},
+const events = [ {event: 'follow', name: 'Follow', link: `${gHubRepoLink}Confetti.webm`},
 {event: 'tip', name: 'Tip', link: `${gHubRepoLink}Coin.webm`},
 {event: 'cheer', name: 'Cheer', link: `${gHubRepoLink}Bits.webm`},
 {event: 'host', name: 'Host', link: `${gHubRepoLink}Confetti.webm`},
@@ -29,19 +21,35 @@ const events = [ {event: 'follow', name: 'Tip', link: `${gHubRepoLink}Confetti.w
 ];
 //Inject Rewards at end of Master List from the Main code
 events.forEach(i => {
-  group = i.event, //not used
+//  group = i.event, //not used
     //FieldDataMaster[KEY][LABEL, GROUP, TYPE, [ VALUE, MIN, MAX, STEP, FUNCTION ] ]
     FieldDataMaster[`${i.event}_enabled`] = [`${i.name} Enabled`, i.name, 'checkbox']
 
   if (i.event === 'tip' || i.event === 'cheer') {
     for (j = 0; j < 3; j++) {
-      FieldDataMaster[`${i.event}_level${j}_amount`] = [`${i.name} Level ${j+1} Amount`, i.name, 'number', 100 * (j+1), 0, 10000];
-      FieldDataMaster[`${i.event}_level${j}_video`] = [`${i.name} Level ${j+1} Video`, i.name, 'video-input'];
+      //shit code.... but no one will ever see this :)
+
+      //"label":"undefined Level 1 Amount","type":"number","value":10
+      if(j===1) i.link = `${gHubRepoLink}Dollar.webm`;
+      else if(j>1) i.link = `${gHubRepoLink}Coin and Dollar.webm`;
+      const baseline = i.event === 'tip' ? 1 : 100;
+      FieldDataMaster[`${i.event}_level${j}_amount`] = [`${i.name} Level ${j+1} Amount`, i.name, 'number', baseline * (j+1), 0, baseline * 100];
+      FieldDataMaster[`${i.event}_level${j}_video`] = [`${i.name} Level ${j+1} Video`, i.name, 'video-input', i.link];
     };
   } else {
-    FieldDataMaster[`${i.event}_level0_video`] = [`${i.event} Event Video`, i.name, 'video-input'];
+    FieldDataMaster[`${i.event}_level0_video`] = [`${i.event} Event Video`, i.name, 'video-input', i.link];
   }
 });
+
+
+//FieldDataMaster[KEY][LABEL, GROUP, TYPE, [ VALUE, MIN, MAX, STEP, FUNCTION ] ]
+FieldDataMaster[`widget_note1`] = ['assets "stolen" 😂 from:', 'About', 'hidden'];
+FieldDataMaster[`widget_note2`] = ['https://fatsackfails.com', 'About', 'hidden'];
+FieldDataMaster[`widget_note3`] = ['👀 code by: pjonp#9094', 'About', 'hidden'];
+FieldDataMaster[`widgetName`] = ['', 'About', 'hidden', "Fatsack's Make It Rain"];
+FieldDataMaster[`widgetAuthor`] = ['', 'About', 'hidden', 'pjonp'];
+FieldDataMaster[`widgetVersion`] = ['', 'About', 'hidden', '1.0.0'];
+FieldDataMaster[`widgetUpdateUrl`] = ['', 'About', 'hidden', ''];
 
 //Make field data...
 for (const [key] of Object.entries(FieldDataMaster)) {
