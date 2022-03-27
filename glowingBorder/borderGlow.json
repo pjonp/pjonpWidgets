@@ -1,0 +1,134 @@
+{
+  "glowStyle_FD": {
+    "type": "dropdown",
+    "label": "Glow Style",
+    "value": "inset",
+    "options": {
+      " ": "Outside",
+      "inset": "Inside"
+    },
+    "group": "Main"
+  },
+  "borderRadius_FD": {
+    "type": "slider",
+    "label": "Border Radius (%)",
+    "value": 0,
+    "min": 0,
+    "max": 50,
+    "step": 0.1,
+    "group": "Main"
+  },
+  "xSize_FD": {
+    "type": "slider",
+    "label": "Width",
+    "value": 450,
+    "min": -1000,
+    "max": 1000,
+    "step": 1,
+    "group": "Size/Position"
+  },
+  "ySize_FD": {
+    "type": "slider",
+    "label": "Height",
+    "value": 300,
+    "min": -1000,
+    "max": 1000,
+    "step": 1,
+    "group": "Size/Position"
+  },
+  "xShift_FD": {
+    "type": "slider",
+    "label": "Width Shift",
+    "value": 0,
+    "min": -500,
+    "max": 500,
+    "step": 1,
+    "group": "Size/Position"
+  },
+  "yShift_FD": {
+    "type": "slider",
+    "label": "Height Shift",
+    "value": 30,
+    "min": -500,
+    "max": 500,
+    "step": 1,
+    "group": "Size/Position"
+  },
+  "glowColor1_FD": {
+    "type": "colorpicker",
+    "label": "Glow Color",
+    "value": "chartreuse",
+    "group": "Glow"
+  },
+  "glowColor2_FD": {
+    "type": "colorpicker",
+    "label": "Glow Color 2",
+    "value": "black",
+    "group": "Glow"
+  },
+  "glowSpeed_FD": {
+    "type": "slider",
+    "label": "Glow Change Time",
+    "value": 10,
+    "min": 0,
+    "max": 30,
+    "step": 0.25,
+    "group": "Glow"
+  },
+  "blur_FD": {
+    "type": "slider",
+    "label": "Blur Minimum",
+    "value": 150,
+    "min": 0,
+    "max": 500,
+    "step": 1,
+    "group": "Glow"
+  },
+  "blurMax_FD": {
+    "type": "slider",
+    "label": "Blur Max (min +)",
+    "value": 10,
+    "min": 0,
+    "max": 250,
+    "step": 1,
+    "group": "Glow"
+  },
+  "spread_FD": {
+    "type": "slider",
+    "label": "Spread Minimum",
+    "value": 120,
+    "min": -250,
+    "max": 500,
+    "step": 1,
+    "group": "Glow"
+  },
+  "spreadMax_FD": {
+    "type": "slider",
+    "label": "Spread Max (min +)",
+    "value": 10,
+    "min": 0,
+    "max": 250,
+    "step": 1,
+    "group": "Glow"
+  },
+  "borderThickness_FD": {
+    "type": "slider",
+    "label": "Border Thickness",
+    "value": 0,
+    "min": 0,
+    "max": 50,
+    "step": 0.5,
+    "group": "Border"
+  },
+  "borderColor_FD": {
+    "type": "hidden",
+    "label": "Use with outside glows",
+    "group": "Border"
+  },
+  "borderColor_FD": {
+    "type": "colorpicker",
+    "label": "Border Color",
+    "value": "#000",
+    "group": "Border"
+  }
+}

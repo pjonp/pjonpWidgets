@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family={{FD_fontFamily}}&display=swap');
+@import url("//cdn.givecloud.co/npm/odometer@0.4.8/themes/odometer-theme-{{FD_theme}}.css");
+.odometer{
+  font-size: {{FD_fontSize}}px !important;
+  border-radius: 10px;
+  color: blue;
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+}
+.counterContainer {
+ display: flex;
+ align-items: center;
+ justify-content: flex-start;
+ width: 100%;
+}
+
+.emote {
+  width: {{FD_emoteSize}}px;
+  border-radius: {{FD_emoteRadius}}%;
+}

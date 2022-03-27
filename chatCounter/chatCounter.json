@@ -1,0 +1,210 @@
+{
+  "FD_TestButton": {
+    "type": "button",
+    "label": "Test",
+    "group": "Trigger Setup"
+  },
+  "FD_triggerOverride": {
+    "type": "checkbox",
+    "label": "Count ALL Chat Messages",
+    "group": "Trigger Setup"
+  },
+  "FD_triggerCase": {
+    "type": "checkbox",
+    "label": "Match Case",
+    "group": "Trigger Setup"
+  },
+  "FD_triggerLimit": {
+    "type": "checkbox",
+    "label": "Limit To 1 Per Message",
+    "group": "Trigger Setup"
+  },
+  "FD_trigger": {
+    "type": "text",
+    "label": "Trigger Word",
+    "value": "LUL",
+    "group": "Trigger Setup"
+  },
+  "FD_theme": {
+    "type": "dropdown",
+    "label": "Odometer Theme",
+    "value": "car",
+    "options": {
+      "default": "Default",
+      "minimal": "Minimal",
+      "car": "Car",
+      "plaza": "Plaza",
+      "slot-machine": "Slot Machine",
+      "train-station": "Train Station",
+      "digital": "Digital"
+    },
+    "group": "Counter Setup"
+  },
+  "FD_fontSize": {
+    "type": "slider",
+    "label": "Counter Size",
+    "value": 50,
+    "min": 10,
+    "max": 150,
+    "step": 1,
+    "group": "Counter Setup"
+  },
+  "FD_minLength": {
+    "label": "Minimum Numbers",
+    "type": "dropdown",
+    "value": "2",
+    "options": {
+      "1": "1",
+      "2": "02",
+      "3": "003",
+      "4": "0004",
+      "5": "0005"
+    },
+    "group": "Counter Setup"
+  },
+  "FD_refreshDelay": {
+    "type": "slider",
+    "label": "Refresh Delay (s)",
+    "value": 0,
+    "step": 0.25,
+    "min": 0,
+    "max": 60,
+    "group": "Counter Setup"
+  },
+  "FD_backgroundOverride": {
+    "type": "checkbox",
+    "label": "Override Default Background Color?",
+    "group": "Visuals Setup"
+  },
+  "FD_backgroundColor1": {
+    "type": "colorpicker",
+    "label": "Top Color Override",
+    "value": "rgb(255, 0, 0)",
+    "group": "Visuals Setup"
+  },
+  "FD_backgroundColor2": {
+    "type": "colorpicker",
+    "label": "Bottom Color Override",
+    "value": "rgb(0, 0, 0)",
+    "group": "Visuals Setup"
+  },
+  "FD_fontFamilyOverride": {
+    "type": "checkbox",
+    "label": "Override Default Font?",
+    "group": "Visuals Setup"
+  },
+    "FD_fontFamily": {
+    "type": "googleFont",
+    "label": "Font name",
+    "value": "Bangers",
+    "group": "Visuals Setup"
+  },
+  "FD_fontColorOverride": {
+    "type": "checkbox",
+    "label": "Override Default Font Color?",
+    "group": "Visuals Setup"
+  },
+  "FD_fontColor": {
+    "type": "colorpicker",
+    "label": "Font Color",
+    "value": "rgba(255,0,0,0.6)",
+    "group": "Visuals Setup"
+  },
+  "FD_emote_Note": {
+    "type": "hidden",
+    "label": "Upload Image or Use Emote Link",
+    "group": "Visuals Setup"
+  },
+  "FD_emote": {
+     "type": "image-input",
+     "label": "Image",
+     "group": "Visuals Setup"
+   },
+   "FD_emoteOverride_Note": {
+    "type": "hidden",
+    "label": "Input Above Overrides Below",
+    "group": "Visuals Setup"
+  },
+  "FD_emoteOverride": {
+    "type": "text",
+    "label": "Image Override",
+    "value": "https://static-cdn.jtvnw.net/emoticons/v2/425618/static/light/3.0",
+    "group": "Visuals Setup"
+  },
+  "FD_emoteSize": {
+    "type": "slider",
+    "label": "Image Size",
+    "value": 80,
+    "min": 0,
+    "max": 500,
+    "step": 1,
+    "group": "Visuals Setup"
+  },
+  "FD_emoteRadius": {
+    "type": "slider",
+    "label": "Image Radius",
+    "value": 0,
+    "min": 0,
+    "max": 50,
+    "step": 1,
+    "group": "Visuals Setup"
+  },
+  "FD_resetCommand": {
+    "type": "text",
+    "label": "Reset Command",
+    "value": "!counter reset",
+    "group": "Chat Commands"
+  },
+  "FD_newTriggerCommand_Note1": {
+    "type": "hidden",
+    "label": "[!cmd] ALL to enable ALL chats mode",
+    "group": "Chat Commands"
+  },
+  "FD_newTriggerCommand": {
+    "type": "text",
+    "label": "Change Trigger i.e: !counter new LUL",
+    "value": "!counter new",
+    "group": "Chat Commands"
+  },
+  "FD_pauseCommand": {
+    "type": "text",
+    "label": "Pause/Resume Command",
+    "value": "!counter pause",
+    "group": "Chat Commands"
+  },
+  "FD_Dlc_Note_1": {
+    "type": "hidden",
+    "label": "Set a max number?",
+    "group": "DLC"
+  },
+    "FD_Dlc_Note_2": {
+    "type": "hidden",
+    "label": "Leaderboard/stats when maxed?",
+    "group": "DLC"
+  },
+    "FD_Dlc_Note_3": {
+    "type": "hidden",
+    "label": "other ideas? Discord: @pjonp#9094",
+    "group": "DLC"
+  },
+  "widgetName": {
+    "type": "hidden",
+    "value": "Chat Counter",
+    "group": "DLC"
+  },
+  "widgetAuthor": {
+    "type": "hidden",
+    "value": "pjonp",
+    "group": "DLC"
+  },
+  "widgetVersion": {
+    "type": "hidden",
+    "value": "1.0.0",
+    "group": "DLC"
+  },
+  "widgetUpdateUrl": {
+    "type": "hidden",
+    "value": "",
+    "group": "DLC"
+  }
+}

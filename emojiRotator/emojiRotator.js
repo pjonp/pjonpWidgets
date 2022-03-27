@@ -23,7 +23,7 @@ window.addEventListener('onWidgetLoad', obj => { //on the widget load
 
   buildEmojiRotator(obj.detail).then(status => {
       const msg = 'Connected; Test a reward on your Twitch channel'; //Status message in info bar
-      new TwitchPubSub(obj.detail.channel.providerId).connect().then(_ => document.getElementById('status').innerText = msg); //replace 'connecting' with msg once connected ~10 seconds;
+      new TwitchPubSub(obj.detail.channel.providerId).connect().then(_ => document.getElementById('status').innerText = msg); //replace 'connecting' with msg once connected;
       widget.info(status, false);
     })
     .catch(e => {

@@ -1,0 +1,54 @@
+:root {
+  --glowStyle: {{glowStyle_FD}};
+
+  --xSize: {{xSize_FD}}px;
+  --ySize: {{ySize_FD}}px;
+  --xShift: {{xShift_FD}}px;
+  --yShift: {{yShift_FD}}px;
+
+  --borderRadius: {{borderRadius_FD}}%;
+  --borderThickness: {{borderThickness_FD}}px;
+  --borderColor: {{borderColor_FD}};
+
+  --glowColor1: {{glowColor1_FD}};
+  --glowColor2: {{glowColor2_FD}};
+  --glowSpeed: {{glowSpeed_FD}}s;
+
+  --spread: {{spread_FD}}px;
+  --spreadMax: {{spreadMax_FD}}px;
+
+  --blur: {{blur_FD}}px;
+  --blurMax: {{blurMax_FD}}px;
+
+  --defaultBoxShadowMin: var(--glowStyle) var(--xShift) var(--yShift) var(--blur) var(--spread) var(--glowColor1);
+  --defaultBoxShadowMax: var(--glowStyle) var(--xShift) var(--yShift) calc(var(--blurMax) + var(--blur)) calc(var(--spreadMax) + var(--spread)) var(--glowColor2);
+}
+
+*{
+  margin: 0px;
+  padding: 0px;
+}
+#main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+}
+#border {
+  flex: 0 0 calc(100% + var(--xSize));
+  height: calc(100% + var(--ySize));
+  border: var(--borderThickness) solid var(--borderColor);
+  box-sizing: border-box;
+  border-radius: var(--borderRadius);
+}
+.borderDefault {
+    box-shadow: var(--defaultBoxShadowMin);
+  	animation: borderDefault var(--glowSpeed) alternate infinite;
+  	animation-timing-function: ease-in-out;
+}
+@keyframes borderDefault {
+  0%   {box-shadow: var(--defaultBoxShadowMin);}
+  100% {box-shadow: var(--defaultBoxShadowMax);}
+}
