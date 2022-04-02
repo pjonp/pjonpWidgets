@@ -1,5 +1,5 @@
 /*
-Copyright 2021 pjonp
+Copyright 2022 pjonp
 This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -26,7 +26,7 @@ class TwitchRewardsPubSub {
         this.connection.onmessage = this.onEvent.bind(this);
         this.connection.onclose = this.onClose.bind(this);
         res();
-      }, 5000);
+      }, 2500);
     })
   };
 
@@ -73,36 +73,56 @@ class TwitchRewardsPubSub {
     else if (psObject.type === 'RECONNECT') return this.reconnect();
     else if (psObject.type === 'MESSAGE' && psObject.data.topic === this.topic) {
       let message = JSON.parse(psObject.data.message);
-      if (message.type === 'channel_points_custom_reward_redemption') return this.emitPuSub(message);
+      if (message.type === 'channel_points_custom_reward_redemption') return sendTPSRewardEvent(message);
     };
-  };
-
-  emitPuSub(message) {
-    const channelPointEvent = new CustomEvent("onEventReceived", {
-      detail: {
-        "listener": "reward-redeemed",
-        "event": {
-          "service": "twitch",
-          "data": {
-            "time": new Date(message.timestamp).getTime(),
-            "tags": message,
-            "nick": message.channel_points_redeeming_user.login,
-            "userId": message.channel_points_redeeming_user.id,
-            "displayName": message.channel_points_redeeming_user.display_name,
-            "text": message.channel_points_user_input,
-            "rewardId": message.channel_points_reward_id,
-            "rewardTitle": message.channel_points_reward_title,
-            "id": message.channel_points_redemption_id,
-          },
-        },
-      }
-    });
-    window.dispatchEvent(channelPointEvent);
   };
 };
 
+function sendTPSRewardEvent(message) {
+  if(typeof message === 'string') {
+    message = {
+        "isTest": true,
+        "id": "b7ae9486-01f1-4ea1-a0bc-f9bv66934ad5",
+        "timestamp": new Date(),
+        "type": "channel_points_custom_reward_redemption",
+        "channel_points_redemption_id": "367e4ce2-d240-48d3-8ada-22c0a7aa2a7c",
+        "channel_points_redeeming_user": {
+            "id": "43165806",
+            "login": "pjonp_LongUserNameTest",
+            "display_name": "pjonp_LongUserNameTest"
+        },
+        "channel_points_reward_id": "e140a91b-7df1-4d11-a19e-e8e313e2e07d",
+        "channel_points_reward_title": message,
+        "channel_points_user_input": "user input for reward"
+    };
+  };
+  const channelPointEvent = new CustomEvent("onEventReceived", {
+    detail: {
+      "listener": "reward-redeemed",
+      "isTest": message.isTest,
+      "event": {
+        "service": "twitch",
+        "data": {
+          "time": new Date(message.timestamp).getTime(),
+          "tags": message,
+          "nick": message.channel_points_redeeming_user.login,
+          "userId": message.channel_points_redeeming_user.id,
+          "displayName": message.channel_points_redeeming_user.display_name,
+          "text": message.channel_points_user_input,
+          "rewardId": message.channel_points_reward_id,
+          "rewardTitle": message.channel_points_reward_title,
+          "id": message.channel_points_redemption_id,
+        },
+      },
+    }
+  });
+  window.dispatchEvent(channelPointEvent);
+};
+
+
 /*
 window.addEventListener('onWidgetLoad', obj => {
+  new TwitchRewardsPubSub(obj.detail.channel.providerId).connect().then(_ =>
   new TwitchRewardsPubSub(obj.detail.channel.providerId).connect();
 });
 

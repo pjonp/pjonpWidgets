@@ -134,6 +134,9 @@ function onCommunityGift(data) {
 function onCheer(data) {
   if (eventSettings.cheer.enabled && data.amount > eventSettings.cheer.min) checkQueue('cheer');
 };
+window.addEventListener('onEventReceived', obj => { //trigger cheer event on elixir event
+  if (obj.detail.listener === 'elixir-latest') onCheer(obj.detail.event); //{amount, name, sessionTop}
+});
 function onKVStoreUpdate(data)
 {
     if(data.key === 'customWidget.glowingBorderSettings' && secondaryWidget) eventSettings = data.value;

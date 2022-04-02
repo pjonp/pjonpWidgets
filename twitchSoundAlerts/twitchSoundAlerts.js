@@ -2,7 +2,7 @@
    widget.container.classList.remove('hide') //remove hide class
    widget.container.classList.add('show'); //add show class
 */
-const TwitchPubSubLoader = (obj) => {
+const TwitchRewardsPubSubLoader = (obj) => {
  const infoContainer = document.createElement('ul');
  infoContainer.id = 'TpsInfo';
  const htmlString = `<li>Note: This box only shows in the editor.</li>
@@ -14,11 +14,12 @@ const TwitchPubSubLoader = (obj) => {
  document.body.appendChild(infoContainer);
  if (obj.detail.overlay.isEditorMode) infoContainer.style.display = 'block'; //show the status bar
  const msg = 'Connected; Test a reward on your Twitch channel';
- new TwitchPubSub(obj.detail.channel.providerId).connect().then(_ => document.getElementById('TpsStatus').innerText = msg); //replace 'connecting' with msg once connected;
+ new TwitchRewardsPubSub(obj.detail.channel.providerId).connect().then(_ => document.getElementById('TpsStatus').innerText = msg); //replace 'connecting' with msg once connected;
  window.addEventListener('onEventReceived', obj => { //on event
+   const data = obj.detail.event.data;
    if(obj.detail.listener !== 'reward-redeemed') return;
-     console.log('SE Event Output: ', event); //Console event for Object reference
-     document.getElementById('TpsLastReward').innerText = event.data.rewardTitle; //update info bar header with last channel point
+     console.log('SE REWARD DATA Output: ', data); //Console event for Object reference
+     document.getElementById('TpsLastReward').innerText = data.rewardTitle; //update info bar header with last channel point
  });
 };
 const WidgetInfoMessage = (msg, warn = false, critical = false) => { //funciton to add items to the info panel
@@ -35,34 +36,28 @@ const WidgetInfoMessage = (msg, warn = false, critical = false) => { //funciton 
  if (!critical) setTimeout(_ => newMsg.remove(), 5000); //remove the message after 5 seconds if not critical
 };
 const exampleTpsEvent = (name) => {
+  console.log('NAME: ', name)
   return (
-{
-    "service": "twitch",
-    "data": {
-        "time": 1633579908448,
-        "tags": {
-            "id": "b7ae9286-01f1-4ea1-a0bc-f9ba66944ad5",
-            "timestamp": "2021-10-07T04:11:48.448Z",
-            "type": "channel_points_custom_reward_redemption",
-            "channel_points_redemption_id": "367e4ce2-d240-48d3-8ada-22c0a7aa2a7c",
-            "channel_points_redeeming_user": {
-                "id": "43165806",
-                "login": "pjonp",
-                "display_name": "pjonp"
-            },
-            "channel_points_reward_id": "e140a91b-7df1-4d11-a19e-e8e313e2e07d",
-            "channel_points_reward_title": name,
-            "channel_points_user_input": ""
+	{
+      detail: {
+        "listener": "reward-redeemed",
+        "event": {
+          "service": "twitch",
+          "data": {
+            "time": new Date().getTime(),
+            "tags": {},
+            "nick": "pjonp_LongUserNameTest",
+            "userId": "1034905845",
+            "displayName": "pjonp_LongUserNameTest",
+            "text": "USER INPUT",
+            "rewardId":0,
+            "rewardTitle": name,
+            "id": 123,
+          },
         },
-        "nick": "pjonp",
-        "userId": "43165806",
-        "displayName": "pjonp",
-        "text": "",
-        "rewardId": "e140a91b-7df1-4d11-a19e-e8e313e2e07d",
-        "rewardTitle": name,
-        "id": "367e4ce2-d240-48d3-8ada-22c0a7aa2a7c"
-    },
-});
+      }
+    }
+  );
 };
 
 
@@ -76,18 +71,23 @@ const exampleTpsEvent = (name) => {
 let eventTriggers = {}, queue = [], running = false;
 
 window.addEventListener('onWidgetLoad', obj => { //on the widget load
-   TwitchPubSubLoader(obj);
+   TwitchRewardsPubSubLoader(obj);
    loadSoundData(obj.detail).then(status => WidgetInfoMessage(status, false)).catch();
 });
 
 window.addEventListener('onEventReceived', obj => { //on event
+  console.log('OBJ: ', obj);
   const event = obj.detail.event; //variables for event & listener
-  if (event.listener === 'reward-redeemed') { //custom listener from imported code
-    if (eventTriggers[event.data.rewardTitle])  checkQueue( event.data );// eventTriggers[event.data.rewardTitle].run(event.data);
+  if (obj.detail.listener === 'reward-redeemed') { //custom listener from imported code
+  	if (eventTriggers[event.data.rewardTitle])  checkQueue( event.data );
   } else if (event.listener === 'widget-button') { //test buttons
     Object.keys(eventTriggers)
       .filter(i => eventTriggers[i].testButton === event.field) //filter the Array to get the correct reward. eventTrigger button is an "index" value; pass on...
-      .forEach(i => checkQueue(exampleTpsEvent(i))); //play the event that matches the button clicked. Dupliates are handled onLoad, so only 1 event will exist
+      .forEach(i => {
+      	const obj = exampleTpsEvent(i);
+      	const event = obj.detail.event;
+      	checkQueue(event.data);
+    }); //play the event that matches the button clicked. Dupliates are handled onLoad, so only 1 event will exist
   };
 });
 
@@ -136,8 +136,8 @@ function loadSoundData(detail) { //emojiRotator module builder, called on widget
 };
 
 //queue
-function checkQueue(event) {
-  if (event) queue.push(event);
+function checkQueue(data) {
+  if (data) queue.push(data);
   if (queue.length > 0 && !running) {
     running = true;
     playAlert(queue[0]);
@@ -145,31 +145,29 @@ function checkQueue(event) {
   return;
 };
 
-async function playAlert(event) {
-  const type = eventTriggers[event.data.rewardTitle].name;
+async function playAlert(data) {
+  const type = eventTriggers[data.rewardTitle].name;
   console.log('alert: ', type);
   let alertDuration = eventTriggers[type].duration;
   const audio = new Audio(eventTriggers[type].audio);
   audio.volume = eventTriggers[type].volume / 100;
   if(!alertDuration) alertDuration = await new Promise((res,rej) => $(audio).on("loadedmetadata", _=> res(audio.duration))); // :shrug:
-  console.log(alertDuration);
   audio.play();
 
-  /*
+
   const eventHtml = `
     <div class="toast show" style='background-color: ${eventTriggers[type].color}'>
       <div class="img" style="background-image: url('${eventTriggers[type].image}')"></div>
-      <div class="desc">${USERNAME}<br>${"EVENT"}</div>
+      <div class="desc">${'username'}<br>${"EVENT"}</div>
     </div>
-`
+`;
   let container = document.getElementById("main");
-  container.insertAdjacentHTML("beforeend", newEvent);
+  container.insertAdjacentHTML("beforeend", eventHtml);
   let targetContainer = container.lastElementChild
     setTimeout(() => {
       targetContainer.remove()
     }, 10000);
-};
-  */
+
 
   setTimeout(_ => {
       audio.pause();
