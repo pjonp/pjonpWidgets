@@ -1,0 +1,35 @@
+{
+  "fd_twitchRewardButton": {
+    "type": "button",
+    "label": "Test Alert",
+    "value": "bffTestButton",
+    "group": "Main"
+  },
+  "fd_RewardTrigger": {
+    "type": "text",
+    "label": "Reward Name:",
+    "value": "rewardTBD",
+    "group": "Main"
+  },
+  "fd_FontFamily": {
+    "type": "googleFont",
+    "label": "Font",
+    "value": "Bangers",
+    "group": "Visuals"
+  },
+  "fd_FontColor": {
+    "type": "colorpicker",
+    "label": "Font Color",
+    "value": "#0f0",
+    "group": "Visuals"
+  },
+  "fd_FontSize": {
+    "type": "slider",
+    "label": "Font Size",
+    "value": 50,
+    "min": 5,
+    "max": 250,
+    "step": 1,
+    "group": "Visuals"
+  }
+}

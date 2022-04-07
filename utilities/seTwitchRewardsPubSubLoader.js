@@ -14,7 +14,7 @@ This program is free software: you can redistribute it and/or modify
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-//requires sePubSub.js
+//requires TwitchRewardsPubSub.js
 const TwitchRewardsPubSubLoader = (obj) => {
   const infoContainer = document.createElement('ul');
   infoContainer.id = 'TpsInfo';
@@ -24,7 +24,7 @@ const TwitchRewardsPubSubLoader = (obj) => {
    <li>Last Reward Seen: <span id='TpsLastReward' style='font-weight: bold'>None Yet</span></li>`;
   infoContainer.innerHTML = htmlString;
 
-  const infoContainerStyle = 'position: fixed;bottom: 0;left: 0;width: 100vw;background-color: black;color: white;display: none;'
+  const infoContainerStyle = 'position: fixed;bottom: 0;left: 0;width: 100vw;background-color: black;color: white;display: none;font-size:20px; z-index: -1;margin-bottom: 0px;'
   infoContainer.style.cssText = infoContainerStyle;
 
   document.body.appendChild(infoContainer);

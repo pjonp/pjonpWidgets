@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family={{fd_FontFamily}}');
+#TpsInfo {
+  z-index: -1;
+  opacity: 50%;
+  height: 100%;
+  width: 350px !important;
+  margin-bottom: 0px;
+}
+#main {
+ padding-left: 400px;
+}
+#twitchRewardLabel {
+ font-family: {{fd_FontFamily}};
+ color: {{fd_FontColor}};
+ font-size: {{fd_FontSize}}px;
+ z-index: 2;
+}
