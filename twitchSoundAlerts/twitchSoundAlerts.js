@@ -1,73 +1,91 @@
-/*
-   widget.container.classList.remove('hide') //remove hide class
-   widget.container.classList.add('show'); //add show class
-*/
-let eventTriggers = {},
+let fieldData,
+  eventTriggers = {},
   queue = [],
-  running = false;
+  running = false,
+  animationTotalTime;
 
-window.addEventListener('onWidgetLoad', obj => { //on the widget load
-  TwitchRewardsPubSubLoader(obj);
-  loadSoundData(obj.detail).then(status => WidgetInfoMessage(status, false)).catch();
+window.addEventListener('onWidgetLoad', async obj => {
+  fieldData = obj.detail.fieldData;
+  await (_=> new Promise(r => setTimeout(r, 500)))(); //debounce
+  TwitchRewardsPubSubLoader(obj); //loader + error display: https://cdn.jsdelivr.net/gh/pjonp/pjonpWidgets@main/utilities/seTwitchRewardsPubSubLoader.js
+
+  animationTotalTime = (fieldData.fadeinTime + fieldData.expandTime + fieldData.shrinkTime + fieldData.fadeoutTime) * 1000;
+
+
+  loadUserSettings(obj.detail).then(status => {
+    WidgetInfoMessage(status, false);
+    if(obj.detail.overlay.isEditorMode && fieldData.testingMode) {
+      const loadedRewardKeys = Object.keys(eventTriggers);
+      (function loopRewardEvents(rewardKeyIndex=0) {
+        const testRewardName = loadedRewardKeys[rewardKeyIndex];
+        const testRewardObj = eventTriggers[testRewardName];
+
+        rewardKeyIndex++;
+        if(rewardKeyIndex >= loadedRewardKeys.length) rewardKeyIndex = 0;
+        sendTPSRewardEvent(testRewardName);
+        setTimeout(_=> {
+          loopRewardEvents(rewardKeyIndex);
+        }, testRewardObj.duration * 1000 + animationTotalTime);
+      })();
+    };
+  }).catch(e => {
+    WidgetInfoMessage(e, true, true);
+  }); //send visual error: https://cdn.jsdelivr.net/gh/pjonp/pjonpWidgets@main/utilities/seTwitchRewardsPubSubLoader.js
 });
 
-window.addEventListener('onEventReceived', obj => { //on event
-  console.log('OBJ: ', obj);
-  const event = obj.detail.event; //variables for event & listener
-  if (obj.detail.listener === 'reward-redeemed') { //custom listener from imported code
+window.addEventListener('onEventReceived', obj => {
+  const event = obj.detail.event;
+  if (obj.detail.listener === 'reward-redeemed') { //custom listener from imported code see: https://cdn.jsdelivr.net/gh/pjonp/pjonpWidgets@main/utilities/seTwitchRewardsPubSub.js
     if (eventTriggers[event.data.rewardTitle]) checkQueue(event.data);
   } else if (event.listener === 'widget-button') { //test buttons
     Object.keys(eventTriggers)
-      .filter(i => eventTriggers[i].testButton === event.field) //filter the Array to get the correct reward. eventTrigger button is an "index" value; pass on...
-      .forEach(i => sendTPSRewardEvent(i)); //play the event that matches the button clicked. Dupliates are handled onLoad, so only 1 event will exist
+      .filter(i => eventTriggers[i].testButton === event.field)
+      .forEach(i => sendTPSRewardEvent(i)); //send custom SE event: https://cdn.jsdelivr.net/gh/pjonp/pjonpWidgets@main/utilities/seTwitchRewardsPubSub.js
   };
 });
 
-
-function loadSoundData(detail) { //emojiRotator module builder, called on widgetload
-  return new Promise((res, rej) => { //return promise; verify that user added at least 1 reward;
-    const verifyRewards = () => { //function to check amount of rewards
+function loadUserSettings(detail) {
+  return new Promise((res, rej) => {
+    const verifySettings = () => {
       const amountLoaded = Object.keys(eventTriggers).length;
-      if (amountLoaded > 0) res(`${amountLoaded} Sound Rewards Loaded`); //if 1 or more reward, resolve
-      else rej('No Rewards Are Filled In'); //if no rewards then reject and prevent websocket connection
+      if (amountLoaded > 0) res(`${amountLoaded} Sound Rewards Loaded`);
+      else rej('No rewards are filled in or sound is missing.');
     };
 
-    const fieldData = detail.fieldData; //field data passed from widgetLoad
-
-    function formatFieldData(i = 0) { //function to loop and build master Object
-      console.log(i);
-      i++; //reward and loop counter
-      if (i > 11) return verifyRewards(); //get reward info; field data locked to 5 only, but headroom for users that try to sneek in more
-      const rewardText = fieldData[`reward${i}_rewardText`];
-      const rewardAudio = fieldData[`reward${i}_audio`];
-
-      if (!rewardText) return formatFieldData(i) //skip empty segments
-      else if (eventTriggers[rewardText]) { //check if a duplicate
-        WidgetInfoMessage(`${rewardText} is a duplicate, reward #${i} skipped`, true); //send message to info panel
-        return formatFieldData(i);
-      } else if (rewardText && !rewardAudio) {
-        WidgetInfoMessage(`${rewardText} skipped because there is sound included.`, true);
-        return formatFieldData(i) //skip empty segments
+    (function formatFieldData(fieldDataIndex = 0) { //recursive function to loop and build master Object
+      fieldDataIndex++;
+      if (fieldDataIndex > 11) return verifySettings();
+      const rewardText = fieldData[`reward${fieldDataIndex}_rewardText`];
+      const rewardAudio = fieldData[`reward${fieldDataIndex}_audio`];
+      let res = '';
+      if (!rewardText) return formatFieldData(fieldDataIndex);
+      if (!rewardAudio) res = `${rewardText} skipped because there is no sound.`;
+      if (eventTriggers[rewardText]) res = `${rewardText} is a duplicate, reward #${fieldDataIndex} skipped`;
+      if (res) {
+        WidgetInfoMessage(res, true, true);
+        return formatFieldData(fieldDataIndex);
       };
 
-      const rewardObject = { //build Object that 'emojiRotator' is looking for
-        index: i,
-        name: rewardText, //reward name
+      const rewardObject = {
+        index: fieldDataIndex,
+        name: rewardText,
         audio: rewardAudio,
-        volume: fieldData[`reward${i}_audioVolume`],
-        duration: fieldData[`reward${i}_duration`],
-        image: fieldData[`reward${i}_imageOverride`].length > 3 ? fieldData[`reward${i}_imageOverride`] : fieldData[`reward${i}_image`],
-        color: fieldData[`reward${i}color`],
-        testButton: `reward${i}_testButton`,
+        volume: fieldData[`reward${fieldDataIndex}_audioVolume`],
+        duration: fieldData[`reward${fieldDataIndex}_duration`],
+        audioPlayDelay: fieldData[`reward${fieldDataIndex}_audioPlayDelay`],
+        image: fieldData[`reward${fieldDataIndex}_imageOverride`].length > 3 ? fieldData[`reward${fieldDataIndex}_imageOverride`] : fieldData[`reward${fieldDataIndex}_image`],
+        imageSize: fieldData[`reward${fieldDataIndex}_imageSize`],
+        imageBgColor: fieldData[`reward${fieldDataIndex}_imageBgColor`],
+        backgroundColor: fieldData[`reward${fieldDataIndex}_backgroundColor`],
+        fontColor: fieldData[`reward${fieldDataIndex}_fontColor`],
+        testButton: `reward${fieldDataIndex}_testButton`,
       };
       eventTriggers[rewardText] = rewardObject;
-      formatFieldData(i);
-    };
-    formatFieldData(); //call function above
+      formatFieldData(fieldDataIndex);
+    })(); //start recursive function
   });
 };
 
-//queue
 function checkQueue(data) {
   if (data) queue.push(data);
   if (queue.length > 0 && !running) {
@@ -77,35 +95,45 @@ function checkQueue(data) {
   return;
 };
 
-async function playAlert(data) {
-  const type = eventTriggers[data.rewardTitle].name;
-  console.log('alert: ', type);
-  let alertDuration = eventTriggers[type].duration;
-  const audio = new Audio(eventTriggers[type].audio);
-  audio.volume = eventTriggers[type].volume / 100;
-  if (!alertDuration) alertDuration = await new Promise((res, rej) => $(audio).on("loadedmetadata", _ => res(audio.duration))); // :shrug:
-  audio.play();
+async function playAlert( {displayName,rewardTitle} ) {
+  const alertSettings = eventTriggers[rewardTitle];
+  const audio = new Audio(alertSettings.audio);
 
+  if (alertSettings.duration === 0) alertSettings.duration = await new Promise((res, rej) => $(audio).on("loadedmetadata", _ => res(audio.duration)));
+  document.documentElement.style.setProperty('--alertDuration', `${alertSettings.duration}s`);
+  audio.volume = alertSettings.volume / 100;
+
+  const runtime = alertSettings.duration * 1000 + animationTotalTime;
+
+  let audioPlayDelay = (alertSettings.audioPlayDelay || (fieldData.fadeinTime + fieldData.expandTime)) * 1000;
+
+  if(audioPlayDelay >= (runtime - 100)) {
+    audioPlayDelay = (fieldData.fadeinTime + fieldData.expandTime) * 1000;
+    WidgetInfoMessage(`Audio Delay for ${rewardTitle} is to long and is set to default value`, true);
+  };
+  setTimeout(_ => audio.play(), audioPlayDelay);
 
   const eventHtml = `
-    <div class="toast show" style='background-color: ${eventTriggers[type].color}'>
-      <div class="img" style="background-image: url('${eventTriggers[type].image}')"></div>
-      <div class="desc">${'username'}<br>${"EVENT"}</div>
-    </div>
-`;
-  let container = document.getElementById("main");
-  container.insertAdjacentHTML("beforeend", eventHtml);
-  let targetContainer = container.lastElementChild
-  setTimeout(() => {
-    targetContainer.remove()
-  }, 10000);
+    <div class='event animate' style='background-color: ${alertSettings.backgroundColor};color: ${alertSettings.fontColor} '>
+      <div class='eventImgContainer' style="background-image: url('${alertSettings.image}'); background-size: ${alertSettings.imageSize}%; background-color:${alertSettings.imageBgColor};"></div>
+      <div class='eventText'>
+    		<div>${displayName}</div>
+    		<div>${rewardTitle}</div>
+	    </div>
+    </div>`;
 
+  const mainContainer = document.getElementById("main");
+  mainContainer.insertAdjacentHTML("beforeend", eventHtml);
+  const alertContainer = mainContainer.lastElementChild
+
+  WidgetInfoMessage(`Playing: ${rewardTitle}: Total Time: ${runtime/1000}s`, false);
 
   setTimeout(_ => {
+    alertContainer.remove()
     audio.pause();
-    queue.shift(); //remove event from queue
-    running = false; //turn off running
-    checkQueue(); //check queue for next event or set to default colors
-  }, alertDuration * 1000); //... after settings time converted to seconds
+    queue.shift();
+    running = false;
+    checkQueue();
+  }, runtime);
   return;
 };

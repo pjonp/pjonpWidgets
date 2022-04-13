@@ -48,7 +48,7 @@ function onWidgetLoad(obj) {
           take ignoredList String, convert to lower case, replace all non letters with a space, convert to Array, then filter out the empty spaces
             pro: prevents user error; "@name1,name2", "name1, name2", "name1 | @name2" etc all work
             con: it filters all charaters that are not in English alphabet
-            alternate filter to replace only the ,'s:
+            alternate filter to replace only the , for users that need to ignore a non-alpha chatter:
             const ignoredListArray = ignoredList.toLowerCase().replace(/[,]/g, ' ').split(' ').filter(i => i);
           */
           return ignoredListArray;
@@ -145,8 +145,8 @@ function onCheer(data) {
   });
 };
 
-window.addEventListener('onEventReceived', obj => { //trigger cheer event on elixir event
-  if (obj.detail.listener === 'elixir-latest') onCheer(obj.detail.event); //{amount, name, sessionTop}
+window.addEventListener('onEventReceived', obj => {
+  if (obj.detail.listener === 'elixir-latest') onCheer(obj.detail.event); //trovo support: {amount, name, sessionTop}
 });
 
 //{ USERID: { count: ###, displayName: STRING }
@@ -163,21 +163,21 @@ function onMessage(chatMessage) {
       text = chatMessageData.text || chatMessageData.content, //use content for Trovo
       userId = chatMessageData.userId,
       displayName = chatMessageData.displayName,
-      nick = chatMessageData.nick || chatMessageData.nick_name.toLowerCase(); //Trovo nick_name need lowercase
+      nick = chatMessageData.nick || chatMessageData.nick_name.toLowerCase(); //Trovo nick_name needs lowercase
 
     if (chatMessageData.content && !chatMessageData.content_data) return; //Prevent old Trovo messages from counting on Load
     else if (chatGoalSettings.chatIgnoredUsers.indexOf(nick) >= 0) return;
     else if (!chatters[userId]) chatters[userId] = new chatter(displayName); //check if user has already chatted; if not create user
     else if (chatGoalSettings.chatUserLimit && chatters[userId].count > 0) return; //chat limit check
     if (chatGoalSettings.countAllChats) {
-      chatGoalSettings.progress++; //if counting all messages, add 1
+      chatGoalSettings.progress++;
       chatters[userId].count++;
     } else {
       const rX = new RegExp(`${chatGoalSettings.chatTrigger}`, `g${chatGoalSettings.triggerWordCase?'':'i'}`); //set up regEx for trigger; check if to enforce case
       const matchCountArray = text.match(rX) || []; //get array of matches
       const adder = chatGoalSettings.triggerWordLimit && matchCountArray.length > 0 ? 1 : matchCountArray.length; //get 'adder'. if "limited" to 1 per message, add 1; else add all
       if (adder === 0) return;
-      chatGoalSettings.progress += adder; //add to counter
+      chatGoalSettings.progress += adder;
       chatters[userId].count += adder;
     };
 

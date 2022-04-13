@@ -55,7 +55,7 @@ const WidgetInfoMessage = (msg, warn = false, critical = false) => { //funciton 
     newMsg.style.fontWeight = 'bold';
   };
   infoContainer.appendChild(newMsg); //add the message to the list
-  if (!critical) setTimeout(_ => newMsg.remove(), 5000); //remove the message after 5 seconds if not critical
+  if (!critical) setTimeout(_ => newMsg.remove(), 10000); //remove the message after 5 seconds if not critical
 };
 
 /*
