@@ -20,6 +20,7 @@ let outputObject = {};
     1: {
         reward: 'Test Reward 1',
         audio: 'https://github.com/pjonp/pjonpWidgets/raw/main/twitchSoundAlerts/assets/8-bit ElectroHouse.mp3',
+        duration: 4.20,
         image: 'https://github.com/pjonp/pjonpWidgets/raw/main/twitchSoundAlerts/assets/streamElementsLogo.gif',
         color: '#790d9b'
       },
@@ -36,7 +37,7 @@ for(let i = 0; i < 5; i++) {
       FieldDataMaster[`reward${rewardId}_testButton`] = [`Reward ${rewardId} Test Button`, groupText, 'button'];
       FieldDataMaster[`reward${rewardId}_rewardText`] = [`Reward ${rewardId} Text Name: (EXACT)`, groupText, 'text', preLoadData[rewardId]?.reward || ''];
       FieldDataMaster[`reward${rewardId}_note1`] = [`Duration 0 = Audio File Length`, groupText, 'hidden'];
-      FieldDataMaster[`reward${rewardId}_duration`] = [`Reward ${rewardId} Duration (s)`, groupText, 'slider', 0, 0, 60, 0.5];
+      FieldDataMaster[`reward${rewardId}_duration`] = [`Reward ${rewardId} Duration (s)`, groupText, 'slider', preLoadData[rewardId]?.duration || 0, 0, 60, 0.1];
       FieldDataMaster[`reward${rewardId}_audio`] = [`Reward ${rewardId} Audio`, groupText, 'sound-input', preLoadData[rewardId]?.audio || ''];
       FieldDataMaster[`reward${rewardId}_audioVolume`] = [`Reward ${rewardId} Audio Volume`, groupText, 'slider', 100, 10, 100, 1];
       FieldDataMaster[`reward${rewardId}_note2`] = [`Audio Delay 0 = Intro Animation`, groupText, 'hidden'];
