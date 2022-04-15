@@ -19,8 +19,8 @@ let outputObject = {};
   const preLoadData = {
     1: {
         reward: 'Test Reward 1',
-        audio: 'tbd',
-        image: 'https://raw.githubusercontent.com/pjonp/pjTestBot/master/modules/.SE_Overlays/chatterWheel/assets/streamElementsLogo.gif',
+        audio: 'https://github.com/pjonp/pjonpWidgets/raw/main/twitchSoundAlerts/assets/8-bit ElectroHouse.mp3',
+        image: 'https://github.com/pjonp/pjonpWidgets/raw/main/twitchSoundAlerts/assets/streamElementsLogo.gif',
         color: '#790d9b'
       },
   };

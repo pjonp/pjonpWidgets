@@ -2,6 +2,8 @@ let count = 0,
   fieldData, platform, chatters = {},
   running = true;
 
+  /*waring: comment all the things! below*/
+
 window.addEventListener('onWidgetLoad', obj => {
   fetch(`https://api.streamelements.com/kappa/v2/channels/${obj.detail.channel.id}`)
     .then(res => res.json())
@@ -42,7 +44,7 @@ window.addEventListener('onEventReceived', obj => {
       data.text = data.content
       handleMessage(data);
     } else if (platform === 'youtube') {
-      //?? should work... right??
+      //??? data.hasPerm = true; //unsure of streamer/mod check
       handleMessage(data); //?? good luck
     };
   } else if (obj.detail.event.field === 'FD_TestButton') setInterval(_ => count += 3, 1123); //test button
