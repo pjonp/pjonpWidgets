@@ -15,7 +15,7 @@ This program is free software: you can redistribute it and/or modify
 */
 class TwitchRewardsPubSub {
   constructor(channel) {
-    this.topic = `dashboard-activity-feed.${channel}`;
+    this.topic = `community-points-channel-v1.${channel}`;
   };
 
   connect() {
